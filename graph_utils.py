@@ -29,38 +29,63 @@ def edges_to_adj_matrix(n, edges):
         matrix[v][u] += 1
     return matrix
 
-def edges_to_inc_matrix(n, e_count, edges):
-    """ Tworzy Macierz Grafu/Incydencji (V x E) dla multigrafów skierowanych """
-    matrix = [[0]*e_count for _ in range(n)]
-    for e_idx, (u, v) in enumerate(edges):
-        matrix[u][e_idx] = 1   # Wychodzi z u
-        matrix[v][e_idx] = -1  # Wchodzi do v
+
+def edges_to_graph_matrix(n, edges):
+    """ Tworzy Macierz Grafu (N x N+4) zgodnie ze schematem projektowym """
+    # Kolumny: 0..N-1 (powiązania), N (LN), N+1 (LP), N+2 (LB), N+3 (LC)
+    matrix = [[0] * (n + 4) for _ in range(n)]
+    adj = [set() for _ in range(n)]
+    predecessors = [0] * n
+
+    for u, v in edges:
+        adj[u].add(v)
+        predecessors[v] += 1
+
+    for i in range(n):
+        # 1. Lista następców (LN i wartości dodatnie)
+        succs = sorted(list(adj[i]))
+        if succs:
+            matrix[i][n] = succs[0] + 1  # LN
+            for k in range(len(succs)):
+                curr = succs[k]
+                next_val = succs[k + 1] + 1 if k + 1 < len(succs) else curr + 1
+                matrix[i][curr] = next_val
+
+        # 2. Lista braków (LB i wartości ujemne)
+        no_succs = sorted([v for v in range(n) if v not in adj[i]])
+        if no_succs:
+            matrix[i][n + 2] = no_succs[0] + 1  # LB
+            for k in range(len(no_succs)):
+                curr = no_succs[k]
+                next_val = no_succs[k + 1] + 1 if k + 1 < len(no_succs) else curr + 1
+                matrix[i][curr] = -next_val
+
+        matrix[i][n + 1] = predecessors[i]  # LP
+        if i in adj[i]: matrix[i][n + 3] = i + 1  # LC (pętla)
+
     return matrix
 
 def generate_random_graph(n, s_pct, is_directed=False):
-    """ Generuje graf według ustalonego nasycenia i typu struktury """
     if not is_directed:
-        # Nieskierowany prosty -> Macierz Sąsiedztwa
         max_e = (n * (n - 1)) // 2
         target_e = int(max_e * (s_pct / 100))
         matrix = [[0]*n for _ in range(n)]
-        edges = 0
-        while edges < target_e:
+        edges_count = 0
+        edges_list = []
+        while edges_count < target_e:
             u, v = random.randint(0, n-1), random.randint(0, n-1)
             if u != v and matrix[u][v] == 0:
                 matrix[u][v] = 1
                 matrix[v][u] = 1
-                edges += 1
+                edges_list.append((u, v))
+                edges_count += 1
         return matrix, target_e
     else:
-        # Multigraf skierowany -> Macierz Incydencji
         max_e = n * (n - 1)
         target_e = int(max_e * (s_pct / 100))
-        matrix = [[0]*target_e for _ in range(n)]
-        for e_idx in range(target_e):
+        edges = []
+        while len(edges) < target_e:
             u, v = random.randint(0, n-1), random.randint(0, n-1)
-            while u == v: # Unikamy pętli własnych dla spójności
-                v = random.randint(0, n-1)
-            matrix[u][e_idx] = 1   # Wyjście
-            matrix[v][e_idx] = -1  # Wejście
-        return matrix, target_e
+            if u != v and (u, v) not in edges:
+                edges.append((u, v))
+        return edges_to_graph_matrix(n, edges), target_e

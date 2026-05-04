@@ -1,6 +1,6 @@
 import sys
 from algorithms import ahs, ahg, aes, aeg
-from graph_utils import load_graph_from_input, load_graph_from_file, edges_to_adj_matrix, edges_to_inc_matrix
+from graph_utils import load_graph_from_input, load_graph_from_file, edges_to_adj_matrix, edges_to_graph_matrix
 from benchmarks import run_tests
 from report import print_markdown_report, plot_3d_surfaces
 
@@ -25,18 +25,12 @@ def manual_test():
 
     if not is_directed:
         matrix = edges_to_adj_matrix(n, edges)
-        print("\nSzukanie cyklu Hamiltona (AHS - Macierz Sąsiedztwa)...")
         h_cycle = ahs(matrix, n)
-
-        print("Szukanie cyklu Eulera (AES - Macierz Sąsiedztwa)...")
         e_cycle = aes(matrix, n, e)
     else:
-        matrix = edges_to_inc_matrix(n, e, edges)
-        print("\nSzukanie cyklu Hamiltona (AHG - Macierz Grafu/Incydencji)...")
-        h_cycle = ahg(matrix, n, e)
-
-        print("Szukanie cyklu Eulera (AEG - Macierz Grafu)...")
-        e_cycle = aeg(matrix, n, e)
+        matrix = edges_to_graph_matrix(n, edges)
+        h_cycle = ahg(matrix, n)  # AHG teraz przyjmuje Macierz Grafu
+        e_cycle = aeg(matrix, n, e)  # AEG teraz przyjmuje Macierz Grafu
 
     if h_cycle:
         print("Znaleziono cykl Hamiltona:", h_cycle)

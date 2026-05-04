@@ -37,7 +37,7 @@ def run_tests():
             results['AES']['time'].append(time.perf_counter() - start)
 
             raw_data_report.append(
-                ("Nieskierowany (Sąsiedztwa)", n, s, results['AHS']['time'][-1], "TAK" if res_ahs else "NIE",
+                ("Nieskierowany (macierz sąsiedztwa)", n, s, results['AHS']['time'][-1], "TAK" if res_ahs else "NIE",
                  results['AES']['time'][-1], "TAK" if res_aes else "NIE"))
 
             # 2. Multigraf Skierowany - Macierz grafu
@@ -45,7 +45,7 @@ def run_tests():
 
             # AHG (Hamilton)
             start = time.perf_counter()
-            res_ahg = ahg(mat_dir, n, e_dir)
+            res_ahg = ahg(mat_dir, n)
             results['AHG']['n'].append(n)
             results['AHG']['s'].append(s)
             results['AHG']['time'].append(time.perf_counter() - start)
@@ -58,7 +58,7 @@ def run_tests():
             results['AEG']['time'].append(time.perf_counter() - start)
 
             raw_data_report.append(
-                ("Skierowany (Incydencji)", n, s, results['AHG']['time'][-1], "TAK" if res_ahg else "NIE",
+                ("Skierowany (macierz grafu)", n, s, results['AHG']['time'][-1], "TAK" if res_ahg else "NIE",
                  results['AEG']['time'][-1], "TAK" if res_aeg else "NIE"))
 
     return results, raw_data_report
