@@ -35,7 +35,7 @@ def manual_test():
         print("\nSzukanie cyklu Hamiltona (AHG - Macierz Grafu/Incydencji)...")
         h_cycle = ahg(matrix, n, e)
 
-        print("Szukanie cyklu Eulera (AEG - Macierz Grafu/Incydencji)...")
+        print("Szukanie cyklu Eulera (AEG - Macierz Grafu)...")
         e_cycle = aeg(matrix, n, e)
 
     if h_cycle:

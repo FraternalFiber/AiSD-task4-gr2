@@ -22,7 +22,7 @@ def load_graph_from_file(filepath):
     return n, e, edges
 
 def edges_to_adj_matrix(n, edges):
-    """ Tworzy Macierz Sąsiedztwa (V x V) dla grafów nieskierowanych """
+    """ Tworzy macierz sąsiedztwa (V x V) dla grafów nieskierowanych """
     matrix = [[0]*n for _ in range(n)]
     for u, v in edges:
         matrix[u][v] += 1

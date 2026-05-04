@@ -25,36 +25,36 @@ def run_tests():
             # AHS (Hamilton)
             start = time.perf_counter()
             res_ahs = ahs(mat_undir, n)
-            results['AHS']['n'].append(n);
-            results['AHS']['s'].append(s);
+            results['AHS']['n'].append(n)
+            results['AHS']['s'].append(s)
             results['AHS']['time'].append(time.perf_counter() - start)
 
             # AES (Euler)
             start = time.perf_counter()
             res_aes = aes(mat_undir, n, e_undir)
-            results['AES']['n'].append(n);
-            results['AES']['s'].append(s);
+            results['AES']['n'].append(n)
+            results['AES']['s'].append(s)
             results['AES']['time'].append(time.perf_counter() - start)
 
             raw_data_report.append(
                 ("Nieskierowany (Sąsiedztwa)", n, s, results['AHS']['time'][-1], "TAK" if res_ahs else "NIE",
                  results['AES']['time'][-1], "TAK" if res_aes else "NIE"))
 
-            # 2. Multigraf Skierowany - Macierz Incydencji
+            # 2. Multigraf Skierowany - Macierz grafu
             mat_dir, e_dir = generate_random_graph(n, s, is_directed=True)
 
             # AHG (Hamilton)
             start = time.perf_counter()
             res_ahg = ahg(mat_dir, n, e_dir)
-            results['AHG']['n'].append(n);
-            results['AHG']['s'].append(s);
+            results['AHG']['n'].append(n)
+            results['AHG']['s'].append(s)
             results['AHG']['time'].append(time.perf_counter() - start)
 
             # AEG (Euler)
             start = time.perf_counter()
             res_aeg = aeg(mat_dir, n, e_dir)
-            results['AEG']['n'].append(n);
-            results['AEG']['s'].append(s);
+            results['AEG']['n'].append(n)
+            results['AEG']['s'].append(s)
             results['AEG']['time'].append(time.perf_counter() - start)
 
             raw_data_report.append(
