@@ -47,36 +47,55 @@ def print_markdown_report(raw_data_report):
 
 
 def plot_3d_surfaces(results):
-    fig = plt.figure(figsize=(12, 10))
-    titles = ['AHS (Hamilton - Nieskierowane)', 'AES (Euler - Nieskierowane)',
-              'AHG (Hamilton - Skierowane)', 'AEG (Euler - Skierowane)']
-    keys = ['AHS', 'AES', 'AHG', 'AEG']
+    """ Wyświetla każdy wykres w osobnym oknie z poprawionym formatowaniem """
+    titles = {
+        'AHS': 'AHS (Hamilton - Macierz Sąsiedztwa)',
+        'AES': 'AES (Euler - Macierz Sąsiedztwa)',
+        'AHG': 'AHG (Hamilton - Macierz Grafu)',
+        'AEG': 'AEG (Euler - Macierz Grafu)'
+    }
 
-    for i, key in enumerate(keys):
-        ax = fig.add_subplot(2, 2, i + 1, projection='3d')
+    for key in ['AHS', 'AES', 'AHG', 'AEG']:
+        if not results[key]['n']: continue
+
+        # Tworzenie nowego okna dla każdego algorytmu
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111, projection='3d')
 
         n_vals = np.array(results[key]['n'])
         s_vals = np.array(results[key]['s'])
         t_vals = np.array(results[key]['time'])
 
-        # Konwersja list punktów do siatki 2D dla matplolib
+        # Przygotowanie siatki danych (Grid)
         N_unique = sorted(list(set(n_vals)))
         S_unique = sorted(list(set(s_vals)))
-        N, S = np.meshgrid(N_unique, S_unique)
-        T = np.zeros_like(N, dtype=float)
+        N_grid, S_grid = np.meshgrid(N_unique, S_unique)
+        T_grid = np.zeros_like(N_grid, dtype=float)
 
         for n_v, s_v, t_v in zip(n_vals, s_vals, t_vals):
-            # Znajdź odpowiednie indeksy w macierzy meshgrid
             r = S_unique.index(s_v)
             c = N_unique.index(n_v)
-            T[r, c] = t_v
+            T_grid[r, c] = t_v
 
-        surf = ax.plot_surface(N, S, T, cmap='viridis', edgecolor='none')
-        ax.set_title(titles[i])
-        ax.set_xlabel('Liczba wierzchołków (n)')
-        ax.set_ylabel('Nasycenie (%)')
-        ax.set_zlabel('Czas [s]')
-        fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5)
+        # Rysowanie powierzchni
+        surf = ax.plot_surface(N_grid, S_grid, T_grid, cmap='turbo', edgecolor='none', alpha=0.9)
 
-    plt.tight_layout()
+        # Konfiguracja tytułu i etykiet
+        ax.set_title(titles[key], pad=20, fontsize=14, fontweight='bold')
+
+        # Kluczowe: labelpad odsuwa opis osi od skali (liczb), zapobiegając nachodzeniu
+        ax.set_xlabel('Liczba wierzchołków (n)', labelpad=15)
+        ax.set_ylabel('Nasycenie (%)', labelpad=15)
+        ax.set_zlabel('Czas wykonania [s]', labelpad=15)
+
+        # Opcjonalnie: dostosowanie kąta widzenia dla lepszej czytelności
+        ax.view_init(elev=25, azim=-45)
+
+        # Pasek koloru
+        fig.colorbar(surf, ax=ax, shrink=0.5, aspect=10, pad=0.1)
+
+        plt.tight_layout()
+        # Nie dajemy plt.show() tutaj, bo zablokuje pętlę
+
+    # Wyświetlamy wszystkie okna na raz na samym końcu
     plt.show()
