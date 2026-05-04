@@ -31,7 +31,7 @@ def edges_to_adj_matrix(n, edges):
 
 
 def edges_to_graph_matrix(n, edges):
-    """ Tworzy Macierz Grafu (N x N+4) zgodnie ze schematem projektowym """
+    """ Tworzy Macierz Grafu (N x N+4) """
     # Kolumny: 0..N-1 (powiązania), N (LN), N+1 (LP), N+2 (LB), N+3 (LC)
     matrix = [[0] * (n + 4) for _ in range(n)]
     adj = [set() for _ in range(n)]

@@ -1,7 +1,7 @@
 import copy
 
 
-# --- POMOCNICZE DLA MACIERZY GRAFU ---
+# --- Pomocnicze dla macierzy grafu ---
 def get_successors(matrix, u, n):
     succs = []
     curr_ptr = matrix[u][n]  # Kolumna LN
@@ -16,9 +16,12 @@ def get_successors(matrix, u, n):
     return succs
 
 
-# --- HAMILTON ---
+# --- CYKL HAMILTONA ---
 def ahs(adj_matrix, n):
-    path = [0] 
+    """
+    Cykl Hamiltona - graf nieskierowany, macierz sąsiedztwa
+    """
+    path = [0]
     visited = [False] * n
     visited[0] = True
 
@@ -39,6 +42,9 @@ def ahs(adj_matrix, n):
 
 
 def ahg(mg_matrix, n):
+    """
+    Cykl Hamiltona - multigraf skierowany, macierz grafu
+    """
     path = [0]
     visited = [False] * n
     visited[0] = True
@@ -59,7 +65,7 @@ def ahg(mg_matrix, n):
     return backtrack(0)
 
 
-# --- EULER ---
+# --- CYKL EULERA ---
 def _count_reachable_mg(temp_adj, u, n):
     visited = [False] * n
     q = [u]
@@ -76,14 +82,16 @@ def _count_reachable_mg(temp_adj, u, n):
 
 
 def aeg(mg_matrix, n, e_count):
-    # Fleury wymaga usuwania krawędzi, więc budujemy roboczą listę sąsiedztwa (multigraf)
+    """
+    Cykl Eulera - graf nieskierowany, macierz sąsiedztwa
+    """
     temp_adj = [[] for _ in range(n)]
     for u in range(n):
         temp_adj[u] = get_successors(mg_matrix, u, n)
 
     path = [0]
     u = 0
-    # W multigrafie skierowanym musimy przejść dokładnie e_count łuków
+
     for _ in range(e_count):
         options = temp_adj[u]
         if not options: break
@@ -106,8 +114,10 @@ def aeg(mg_matrix, n, e_count):
     return path if len(path) == e_count + 1 else None
 
 
-# AES pozostaje bez zmian (używa adj_matrix)
 def aes(adj_matrix, n, e_count):
+    """
+    Cykl Eulera - multigraf, macierz grafu
+    """
     M = copy.deepcopy(adj_matrix)
     path = [0]
     u = 0

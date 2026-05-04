@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 
 def print_markdown_report(raw_data_report):
     print("\n" + "=" * 50)
-    print(" RAPORT KOŃCOWY (MARKDOWN) ")
-    print("=" * 50 + "\n")
 
-    print("# Raport z wykonania algorytmów z powracaniem\n")
+    print("# Raport - algorytmy z powracaniem\n")
 
     print("## 1. Wyniki testów (Dane wejściowe i czasy wykonania)\n")
     print(
