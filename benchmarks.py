@@ -21,7 +21,7 @@ def _get_sample_edges(matrix, limit=5, is_directed=False):
 
 
 def run_tests():
-    n_values = list(range(6, 16))
+    n_values = [10, 12, 14, 16, 18, 20, 22, 24, 26, 28]
     s_values = [10, 20, 30, 40, 50, 60, 70, 80, 90]
 
     results = {
