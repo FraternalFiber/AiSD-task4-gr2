@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 
 def format_path(path):
     """
-    Formatowanie wyniku. Jeśli brak cyklu -> zwraca 'Acykliczny'.
-    Jeśli lista jest długa -> ucina środkowe wartości wstawiając '...'.
+    Formatowanie wyniku.
     """
     if path is None:
         return "Acykliczny"
@@ -103,7 +102,6 @@ def plot_3d_surfaces(results):
 
         # pad odsuwa pasek skali od całego bloku wykresu
         fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5, pad=0.15)
+        fig.savefig(f"Plots/{title}.png")
 
-    # Wywołujemy plt.show() tylko RAZ po wygenerowaniu wszystkich 4 okien.
-    # Spowoduje to, że otworzą się one jednocześnie.
     plt.show()

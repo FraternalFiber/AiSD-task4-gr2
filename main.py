@@ -57,7 +57,6 @@ def main():
             manual_test()
         elif choice == '2':
             results = run_tests()
-            print("\nWyświetlanie wykresów w nowym oknie (zamknij okno, aby kontynuować)...")
             plot_3d_surfaces(results)
         elif choice == '3':
             sys.exit(0)
