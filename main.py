@@ -2,7 +2,7 @@ import sys
 from algorithms import ahs, ahg, aes, aeg
 from graph_utils import load_graph_from_input, load_graph_from_file, edges_to_adj_matrix, edges_to_graph_matrix
 from benchmarks import run_tests
-from report import print_markdown_report, plot_3d_surfaces
+from report import plot_3d_surfaces
 
 
 def manual_test():
@@ -56,8 +56,7 @@ def main():
         if choice == '1':
             manual_test()
         elif choice == '2':
-            results, raw_report = run_tests()
-            print_markdown_report(raw_report)
+            results = run_tests()
             print("\nWyświetlanie wykresów w nowym oknie (zamknij okno, aby kontynuować)...")
             plot_3d_surfaces(results)
         elif choice == '3':
