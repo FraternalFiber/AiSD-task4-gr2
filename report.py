@@ -24,7 +24,7 @@ def print_live_markdown_block(n, s, e_undir, edges_sample_undir, e_dir, edges_sa
 
     print(f"\n## Testowanie dla n = {n}, nasycenie = {s}%")
 
-    # Fragment pliku dla grafu nieskierowanego
+    # Grafu nieskierowany
     print("### Parametry wejściowe (fragment pliku - graf nieskierowany):")
     print("```text")
     print(f"{n} {e_undir}")
@@ -33,7 +33,7 @@ def print_live_markdown_block(n, s, e_undir, edges_sample_undir, e_dir, edges_sa
     print("...")
     print("```")
 
-    # Fragment pliku dla grafu skierowanego
+    # Graf skierowany
     print("### Parametry wejściowe (fragment pliku - multigraf skierowany):")
     print("```text")
     print(f"{n} {e_dir}")
@@ -42,7 +42,6 @@ def print_live_markdown_block(n, s, e_undir, edges_sample_undir, e_dir, edges_sa
     print("...")
     print("```\n")
 
-    # Tabela z wynikami (z odpowiednim formatowaniem Markdown)
     print("### Wyniki wyszukiwania cykli:")
     print(f"| {'Algorytm':<8} | {'Reprezentacja':<34} | {'Czas [s]':<8} | {'Wynik (fragment)':<45} |")
     print(f"|:{'-' * 8}|:{'-' * 34}|:{'-' * 8}|:{'-' * 45}|")
@@ -69,10 +68,8 @@ def plot_3d_surfaces(results):
     }
 
     for key, title in titles.items():
-        # Tworzenie nowego okna dla każdego wykresu
         fig = plt.figure(figsize=(10, 8))
 
-        # Opcjonalne: Ustawienie tytułu samego okna systemowego
         fig.canvas.manager.set_window_title(title)
 
         ax = fig.add_subplot(111, projection='3d')
@@ -97,10 +94,8 @@ def plot_3d_surfaces(results):
         ax.set_xlabel('Liczba wierzchołków (n)')
         ax.set_ylabel('Nasycenie (%)')
 
-        # labelpad odsuwa napis od osi Z, zapobiegając nachodzeniu na cyferki
         ax.set_zlabel('Czas [s]', labelpad=12)
 
-        # pad odsuwa pasek skali od całego bloku wykresu
         fig.colorbar(surf, ax=ax, shrink=0.5, aspect=5, pad=0.15)
         fig.savefig(f"Plots/{title}.png")
 

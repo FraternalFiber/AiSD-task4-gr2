@@ -32,7 +32,6 @@ def edges_to_adj_matrix(n, edges):
 
 def edges_to_graph_matrix(n, edges):
     """ Tworzy Macierz Grafu (N x N+4) """
-    # Kolumny: 0..N-1 (powiązania), N (LN), N+1 (LP), N+2 (LB), N+3 (LC)
     matrix = [[0] * (n + 4) for _ in range(n)]
     adj = [set() for _ in range(n)]
     predecessors = [0] * n
@@ -60,8 +59,8 @@ def edges_to_graph_matrix(n, edges):
                 next_val = no_succs[k + 1] + 1 if k + 1 < len(no_succs) else curr + 1
                 matrix[i][curr] = -next_val
 
-        matrix[i][n + 1] = predecessors[i]  # LP
-        if i in adj[i]: matrix[i][n + 3] = i + 1  # LC (pętla)
+        matrix[i][n + 1] = predecessors[i]
+        if i in adj[i]: matrix[i][n + 3] = i + 1
 
     return matrix
 
