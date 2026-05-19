@@ -1,5 +1,6 @@
 import random
 
+
 def load_graph_from_input():
     print("Podaj V i E (spacja), a następnie kolejne krawędzie/łuki (u v):")
     first_line = input().strip().split()
@@ -9,6 +10,7 @@ def load_graph_from_input():
         u, v = map(int, input().strip().split())
         edges.append((u, v))
     return n, e, edges
+
 
 def load_graph_from_file(filepath):
     with open(filepath, 'r') as f:
@@ -20,6 +22,7 @@ def load_graph_from_file(filepath):
             u, v = map(int, line.strip().split())
             edges.append((u, v))
     return n, e, edges
+
 
 def edges_to_adj_matrix(n, edges):
     """ Tworzy macierz sąsiedztwa (V x V) dla grafów nieskierowanych """
@@ -63,6 +66,7 @@ def edges_to_graph_matrix(n, edges):
         if i in adj[i]: matrix[i][n + 3] = i + 1
 
     return matrix
+
 
 def generate_random_graph(n, s_pct, is_directed=False):
     if not is_directed:

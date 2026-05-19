@@ -31,7 +31,7 @@ def run_tests():
         'AEG': {'n': [], 's': [], 'time': []}
     }
 
-    print("# Raport z wykonania algorytmów z powracaniem\n")
+    print("# Raport - algorytmy z powracaniem\n")
 
     for n in n_values:
         for s in s_values:
@@ -58,24 +58,24 @@ def run_tests():
             t_aeg = time.perf_counter() - start
 
             # Zapis danych do słownika (dla wykresów)
-            results['AHS']['n'].append(n);
-            results['AHS']['s'].append(s);
+            results['AHS']['n'].append(n)
+            results['AHS']['s'].append(s)
             results['AHS']['time'].append(t_ahs)
-            results['AES']['n'].append(n);
-            results['AES']['s'].append(s);
+            results['AES']['n'].append(n)
+            results['AES']['s'].append(s)
             results['AES']['time'].append(t_aes)
-            results['AHG']['n'].append(n);
-            results['AHG']['s'].append(s);
+            results['AHG']['n'].append(n)
+            results['AHG']['s'].append(s)
             results['AHG']['time'].append(t_ahg)
-            results['AEG']['n'].append(n);
-            results['AEG']['s'].append(s);
+            results['AEG']['n'].append(n)
+            results['AEG']['s'].append(s)
             results['AEG']['time'].append(t_aeg)
 
             # Pobranie max. 5 pierwszych krawędzi (jak z pliku wejściowego)
             edges_sample_undir = _get_sample_edges(mat_undir, limit=5, is_directed=False)
             edges_sample_dir = _get_sample_edges(mat_dir, limit=5, is_directed=True)
 
-            # === Drukuj na bieżąco raport w formacie Markdown ===
+            # Wyświetlanie raportu na bieżąco
             print_live_markdown_block(
                 n, s,
                 e_undir, edges_sample_undir,

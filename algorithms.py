@@ -3,6 +3,9 @@ import copy
 
 # --- Pomocnicze dla macierzy grafu ---
 def get_successors(matrix, u, n):
+    """
+    Zwraca następniki grafu
+    """
     succs = []
     curr_ptr = matrix[u][n]  # Kolumna LN
     while curr_ptr > 0:
@@ -67,6 +70,9 @@ def ahg(mg_matrix, n):
 
 # --- CYKL EULERA ---
 def _count_reachable_mg(temp_adj, u, n):
+    """
+    Zliczanie osiągalnych wierzchołków do algorytmu Fleury'ego
+    """
     visited = [False] * n
     q = [u]
     visited[u] = True

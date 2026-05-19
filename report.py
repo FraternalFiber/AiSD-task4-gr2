@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 def format_path(path):
     """
-    Formatowanie wyniku.
+    Formatowanie wyniku
     """
     if path is None:
         return "Acykliczny"
