@@ -15,7 +15,14 @@ def manual_test():
         n, e, edges = load_graph_from_input()
     elif choice == '2':
         filepath = input("Podaj ścieżkę do pliku (np. graf1.txt): ")
-        n, e, edges = load_graph_from_file(filepath)
+        try:
+            n, e, edges = load_graph_from_file(filepath)
+        except FileNotFoundError:
+            print(f"\n[BŁĄD] Nie znaleziono pliku o nazwie: '{filepath}'.")
+            return
+        except Exception as ex:
+            print(f"\n[BŁĄD] Wystąpił problem z odczytem pliku: {ex}")
+            return
     else:
         print("Błędny wybór.")
         return
